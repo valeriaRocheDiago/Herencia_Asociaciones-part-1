@@ -1,0 +1,17 @@
+# Archivos de compilación de Maven
+/target/
+
+# Archivos de IntelliJ / VSCode
+.idea/
+.vscode/
+*.iml
+
+# Archivos temporales del sistema
+.DS_Store
+
+# Archivos de log
+*.log
+
+# Configuración de build local
+.mvn/
+.settings/

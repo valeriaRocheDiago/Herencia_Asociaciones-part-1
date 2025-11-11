@@ -1,0 +1,65 @@
+@startuml ComponentDiagram_TiendaAgro
+skinparam componentStyle rectangle
+title Diagrama de Componentes - Tienda Agro
+
+package "UI (Interfaz)" as UI {
+  [Main / Menu] as UI_Main
+}
+
+package "CRUD / Servicios" as CRUD {
+  [ClienteService] as ClienteCrud
+  [FacturaService] as FacturaCrud
+  [ProductoService] as ProductoCrud
+}
+
+package "Modelo (Entidades)" as MODEL {
+  [Cliente] 
+  [Factura]
+  [LineaFactura]
+  [Producto]
+  [ProductoControl]
+  [Fertilizante]
+  [ControlPlagas]
+  [Antibiotico]
+  [TipoAnimal (enum)]
+}
+
+package "Tests (JUnit)" as TESTS {
+  [Unit Tests]
+}
+
+package "Debug / Utils" as DEBUG {
+  [DebugHelper]
+}
+
+' Dependencias y relaciones entre componentes
+UI_Main --> ClienteCrud : usa
+UI_Main --> FacturaCrud : usa
+UI_Main --> ProductoCrud : usa
+UI_Main --> MODEL : instancia
+
+ClienteCrud --> MODEL : crea/consulta/actualiza clientes
+FacturaCrud --> MODEL : crea facturas / agrega lineas
+ProductoCrud --> MODEL : crea/consulta productos
+
+TESTS --> MODEL : prueba clases
+TESTS --> ClienteCrud : prueba lógica
+DEBUG --> MODEL : crea escenarios
+
+note right of CRUD
+  - Paquete Java: com.tienda.agro.crud
+  - Contiene servicios que encapsulan la manipulación de objetos del modelo
+end note
+
+note left of MODEL
+  - Paquete Java: com.tienda.agro.model
+  - Contiene: Cliente, Factura, LineaFactura, Producto y subtipos
+end note
+
+note bottom
+  - UI: com.tienda.agro.ui (Main/Menu)
+  - Tests: src/test/java (JUnit)
+  - Output compilado: target/ (Maven)
+end note
+
+@enduml

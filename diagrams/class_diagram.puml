@@ -1,0 +1,54 @@
+@startuml ClassDiagram_TiendaAgro
+skinparam classAttributeIconSize 0
+
+abstract class Producto {
+  - nombre: String
+  - precio: double
+  + getNombre(): String
+  + getPrecio(): double
+}
+
+abstract class ProductoControl {
+  - registroICA: String
+  - frecuenciaDias: int
+}
+
+class ControlPlagas {
+  - periodoCarenciaDias: int
+}
+
+class Fertilizante {
+  - fechaUltimaAplicacion: LocalDate
+}
+
+class Antibiotico {
+  - dosisKg: double
+  - tipoAnimal: String
+}
+
+class LineaFactura {
+  - cantidad: int
+  + getSubtotal(): double
+}
+
+class Factura {
+  - fecha: LocalDate
+  + agregarLinea()
+  + calcularTotal(): double
+}
+
+class Cliente {
+  - nombre: String
+  - cedula: String
+  + agregarFactura()
+}
+
+Producto <|-- ProductoControl
+ProductoControl <|-- ControlPlagas
+ProductoControl <|-- Fertilizante
+Producto <|-- Antibiotico
+
+Cliente "1" -- "0..*" Factura
+Factura "1" -- "1..*" LineaFactura
+LineaFactura "1" -- "1" Producto
+@enduml
